@@ -242,6 +242,10 @@ def demo():
     pp.pprint(labour_market_dimensions, indent=4)
 
     df_labour = get_timeseries(dataset_name, labour_market_dimensions)[0]
+    df_labour["year"] = (
+        df_labour["id"].str[-4:].astype(int)
+    )  # extract year as last 4 digits of row id
+    df_labour = df_labour.sort_values("year")
     print("")
     print(df_labour)
     print("\n")
@@ -255,6 +259,7 @@ def demo():
     }
     print(f"Chosen dimensions for the {dataset_name}")
     df_gdp = get_timeseries(gdp_dataset_name, gdp_dimensions)[0]
+    df_gdp = df_gdp.sort_values("id")
     pp.pprint(gdp_dimensions, indent=4)
     print("")
     print(gdp_dataset_name)
